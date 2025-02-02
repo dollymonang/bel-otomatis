@@ -5,7 +5,7 @@ import pygame
 pygame.mixer.init()
 
 def play_bell():
-    audio_path = "bel.mp3"  # Ganti dengan file nada bel
+    audio_path = "bell.mp3"  # Ganti dengan file nada bel
     pygame.mixer.music.load(audio_path)
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
