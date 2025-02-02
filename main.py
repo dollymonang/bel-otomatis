@@ -1,19 +1,21 @@
 import schedule
 import time
-import pygame
-
-pygame.mixer.init()
+import subprocess
 
 def play_bell():
-    audio_path = "bell.mp3"  # Ganti dengan file nada bel
-    pygame.mixer.music.load(audio_path)
-    pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy():
-        time.sleep(1)
+    audio_path = "bell.mp3"  # Ganti dengan file MP3 yang ada di Railway
 
-schedule.every().day.at("07:00").do(play_bell)
-schedule.every().day.at("12:00").do(play_bell)
-schedule.every().day.at("15:00").do(play_bell)
+    try:
+        # Gunakan ffmpeg untuk memutar audio
+        subprocess.run(["ffmpeg", "-i", audio_path, "-filter:a", "volume=1.0", "-f", "wav", "pipe:1"], check=True)
+        print("Bel berbunyi!")
+    except Exception as e:
+        print(f"Error memutar bel: {e}")
+
+# Jadwal Bel
+schedule.every().day.at("16:30").do(play_bell)
+schedule.every().day.at("16:50").do(play_bell)
+schedule.every().day.at("17:00").do(play_bell)
 
 print("Bel otomatis berjalan di Railway...")
 
